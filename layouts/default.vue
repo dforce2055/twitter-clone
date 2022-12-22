@@ -71,7 +71,7 @@ import {  DialogTitle } from '@headlessui/vue'
 import { useUser } from "~/stores/user"
 import { User } from '../types'
 const userStore = useUser()
-const user = userStore.$state.user as User
+let user = userStore.$state.user as User | undefined
 let showNotificationLogout = $ref(false)
 
 const router = useRouter()
@@ -81,7 +81,7 @@ const onLogout = async () => {
   showNotificationLogout = false
 
   await useFetch('/api/auth/logout')
-
+  user = undefined
   const path = useCustomLocaleRoute('/')
   router.push({
     path,

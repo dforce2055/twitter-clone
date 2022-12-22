@@ -4,7 +4,7 @@ export const generateAccessToken = (userId: string) => {
   const config = useRuntimeConfig()
 
   return jwt.sign({ userId }, config.jwtAccessTokenSecret, {
-    expiresIn: '1m'
+    expiresIn: '60m'
   })
 }
 export const decodeAccessToken = (token: string) => {
@@ -12,15 +12,18 @@ export const decodeAccessToken = (token: string) => {
   try { 
     return jwt.verify(token, config.jwtAccessTokenSecret)
   }
-  catch (error) {
-    return null
+  catch (error: any) {
+    if (error.name === 'TokenExpiredError') 
+      return { error }
+    else
+      return null
   }
 }
 export const generateRefreshToken = (userId: string) => {
   const config = useRuntimeConfig()
 
   return jwt.sign({ userId }, config.jwtRefreshTokenSecret, {
-    expiresIn: '1h'
+    expiresIn: '24h'
   })
 }
 export const decodeRefreshToken = (token: string) => {
@@ -28,8 +31,11 @@ export const decodeRefreshToken = (token: string) => {
   try { 
     return jwt.verify(token, config.jwtRefreshTokenSecret)
   }
-  catch (error) {
-    return null
+  catch (error: any) {
+    if (error.name === 'TokenExpiredError') 
+      return { error }
+    else
+      return null
   }
 }
 export const generateTokens = (userId: string) => {

@@ -28,4 +28,18 @@ export interface TokenDecoded {
   exp: number
   iat: number
   userId: string
+  error: TokenError
+}
+
+export interface TokenError {
+  expiredAt: Date
+  message: string
+  name: TOKEN_ERROR
+}
+
+export enum TOKEN_ERROR { 
+  EXPIRED = 'TokenExpiredError',
+}
+export enum TOKEN_SUCCESS { 
+  VALID = 'Access token valid',
 }

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="4xl">Profile Page</h1>
+    <h1 class="4xl">Notifications Page</h1>
   </section>
 </template>
 <script setup lang="ts">
@@ -13,7 +13,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'ProfilePage',
+  name: 'NotificationsPage',
   data: () => ({
 
   })

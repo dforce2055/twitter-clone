@@ -1,9 +1,9 @@
 // Private APIm only acces with $fetch
 // DOCS: https://nuxt.com/docs/guide/directory-structure/server#api-routes
 import { getUserById } from '../../db/users'
-import { getRefreshTokenByToken, createRefreshToken } from '../../db/refreshTokens'
+import { getRefreshTokenByToken, createRefreshToken, deleteRefreshToken } from '../../db/refreshTokens'
 import { TokenDecoded, User, UserAndPassword, NewUser } from '../../../types'
-import { decodeRefreshToken, generateTokens, sendRefreshTokenCookie } from '../../../utils'
+import { decodeRefreshToken, generateTokens, sendRefreshTokenCookie,  } from '../../../utils'
 
 export default defineEventHandler(async (event) => {
   // obtain the cookies previously set
@@ -22,6 +22,10 @@ export default defineEventHandler(async (event) => {
       statusCode: 401,
       statusMessage: 'Invalid refresh token'
     }))
+  
+  // delete the old refresh token from db
+  if (refreshTokenDB)
+    deleteRefreshToken({ token: refreshTokenDB.token })
 
   const tokenDecoded = decodeRefreshToken(refreshTokenDB.token) as TokenDecoded
 

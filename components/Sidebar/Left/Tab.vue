@@ -9,7 +9,7 @@
       <slot name="icon"></slot>
     </div>
 
-    <div class="hidden ml-4 text-xl xl:block" :class="textClasses">
+    <div class="hidden ml-4 text-xl xl:block">
       <slot name="name"></slot>
     </div>
 
@@ -29,7 +29,12 @@ const props = defineProps({
   },
 })
 
-const textClasses = computed(() => props.active ? 'font-semibold' : 'font-normal')
+// const textClasses = computed(() => props.active ? 'font-semibold' : 'font-normal')
 
 
 </script>
+<style scoped>
+.router-link-exact-active {
+  @apply text-sky-500 font-semibold;
+}
+</style>

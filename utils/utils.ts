@@ -8,3 +8,16 @@ export const getCookieRefreshToken = (cookie: string) => {
     return null
   }
 }
+
+export const detectBrowser = (headers: IncomingHttpHeaders): boolean => {
+  try {
+    const userAgent = headers['user-agent'] || ''
+    const browser = userAgent?.includes('Mozilla')
+      || userAgent?.includes('Chrome')
+      || userAgent?.includes('Safari')
+    
+    return browser
+  } catch (e) {
+    return false
+  }
+}
