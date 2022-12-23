@@ -55,7 +55,6 @@ export default defineNuxtRouteMiddleware(async(to, from) => {
       }
     }
   } catch (error) {
-    console.log('Catching error ', error)
     return false
   }
 })

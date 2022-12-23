@@ -16,6 +16,8 @@ export default defineEventHandler(async (event) => {
   const endpoints = [
     // '/es/api/users',
     // '/es/api/users?name=bigote',
+    '/api/auth/user',
+    '/api/auth/users',
     '/api/users',
     '/about',
     '/bookmarks',
@@ -29,64 +31,34 @@ export default defineEventHandler(async (event) => {
     return pattern.match(currenUrl)
   })
 
-  if (!handleByThisMiddleware) {
-    console.log('handleByThisMiddleware', handleByThisMiddleware)
+  if (!handleByThisMiddleware)
     return
-  }
-
-  const cookie = event.node.req.headers['cookie'] || ''
-  const refreshToken = getCookieRefreshToken(cookie) || ''
-
-  const decodedToken = decodeRefreshToken(refreshToken) as TokenDecoded
-
-  // if (decodedToken)
-  //   return
-  
-  if (!refreshToken || !decodedToken) {
-    if (browser)
-      sendRedirect(event, '/')
-    
-    if (!browser)
-      sendError(event, createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized Login first',
-      }))
-  }
 
   try {
-    // TODO: get refresh token from db and compare with the one in the cookie
+    // get refresh token from cookie
+    const cookie = event.node.req.headers['cookie'] || ''
+    const refreshToken = getCookieRefreshToken(cookie) || ''
+
+    const decodedToken = decodeRefreshToken(refreshToken) as TokenDecoded
+    if (!refreshToken || !decodedToken)
+      throw new Error('Unauthorized Login first')
+
+    // get refresh token from db and compare with the one in the cookie
     const user = await getUserById(decodedToken.userId) || ''
-    
-    // // if jwt is old, get new one
-    const { access_token, refresh_token } = await $fetch('/api/auth/refresh', {
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${refreshToken}`,
-        // 'refresh_token': refreshToken,
-        'cookie': `refresh_token=${refreshToken}`
-      }
-    })
+    delete user?.password
 
     event.context.auth = {
       user,
-      access_token,
-      refresh_token
     }
 
-    return true
-    
   } catch (error: any) {
     if (browser)
       sendRedirect(event, '/')
     
     if (!browser)
       sendError(event, createError({
-        statusCode: error.statusCode,
-        statusMessage: error.statusMessage,
+        statusCode: error.statusCode || 401,
+        statusMessage: error.statusMessage || error.message || 'Unauthorized',
       }))
   }
-  
-
-  // if (event.node.req.url?.includes('login'))
-  //   event.node.res.writeHead(301, { Location: '/' })
 })

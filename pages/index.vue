@@ -24,12 +24,14 @@ const loadingUserSesion = ref(true)
 // })
 
 
-const { data } = await useFetch('/api/users?name=bigote', {
-  method: 'post',
-  body: {
-    age: 36
-  }
-})
+// const { data } = await useFetch('/api/users?name=bigote', {
+//   method: 'post',
+//   body: {
+//     age: 36
+//   }
+// })
+const { data } = await useFetch('/api/auth/user')
+console.log('user', data.value)
 loading.value = false
 // const { data } = await useFetch('/api/auth/refresh')
 // console.log('refresh_toke', data.value?.refresh_token)
