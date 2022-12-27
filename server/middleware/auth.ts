@@ -19,6 +19,8 @@ export default defineEventHandler(async (event) => {
     '/api/auth/user',
     '/api/auth/users',
     '/api/users',
+    '/api/user/tweets',
+    // '/api/tweets',
     '/about',
     '/bookmarks',
     '/explore',

@@ -9,7 +9,7 @@
     </div>
 
     <ClientOnly fallback-tag="span" fallback="Loading session...">
-      <section v-if="user">
+      <section v-if="user" class="flex flex-col h-screen justify-between">
         <div class="mt-2 space-y-3">
     
           <SidebarLeftTab to="/">
@@ -89,29 +89,38 @@
           </SidebarLeftTab>
     
           <div class="hidden xl:block">
-            <UIButton
+            <UITooltip 
               text="Tweet"
-              liquid 
-              size="block"
-              @click="emits('on-tweet')"
-            />
+            >
+              <UIButton
+                text="Tweet"
+                liquid
+                size="block"
+                @click="emits('on-tweet')"
+              />
+            </UITooltip>
           </div>
     
           <div class="block xl:hidden">
-            <UIButton
-              @click="emits('on-tweet')"
-              >
-              <div class="w-6 h-6 font-bold">
-                <PencilIcon />
-              </div>
-            </UIButton>
+            <UITooltip 
+              text="Tweet"
+            >
+              <UIButton
+                @click="emits('on-tweet')"
+                >
+                <div class="w-6 h-6 font-bold">
+                  <PencilIcon />
+                </div>
+              </UIButton>
+            </UITooltip>
           </div>
-    
         </div>
-    
         
         <div
-          class="flex flex-row items-center justify-center px-2 py-2 mx-auto mt-auto mb-5 rounded-full cursor-pointer w-14 xl:w-full hover:bg-gray-100 dark:hover:bg-dim-800"
+          class="flex flex-row  px-2 py-2 mt-auto mb-5 rounded-full 
+            cursor-pointer w-14 xl:w-full hover:bg-gray-100 dark:hover:bg-dim-800
+            flex-shrink-0
+          "
           :class="defaultTransition" 
           @click="emits('on-logout')"
         >
@@ -135,14 +144,14 @@
               </div>
     
             </div>
-        </UITooltip>
+          </UITooltip>
     
           <!-- ICON -->
-          <div class="hidden ml-auto xl:block">
+          <!-- <div class="hidden ml-auto xl:block">
             <div class="w-4 h-4">
               <ChevronDownIcon />
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
       <section v-else>

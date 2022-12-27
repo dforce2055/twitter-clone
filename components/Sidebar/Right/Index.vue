@@ -82,6 +82,9 @@
 </template>
 <script setup lang="ts">
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
+import { useUser } from "~/stores/user"
+const userStore = useUser()
+
 const search = ref('')
 // const emitter = useEmitter()
 
@@ -127,8 +130,9 @@ const whoToFollowItems = ref([
     }
 ])
 
-// function handleToggleDarkMode() {
-//     emitter.$emit('toggleDarkMode')
-// }
+const handleToggleDarkMode = () => {
+    const darkMode = userStore.$state.darkMode as boolean
+    userStore.setDarkMode(!darkMode)
+}
 
 </script>

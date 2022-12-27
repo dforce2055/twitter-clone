@@ -3,9 +3,7 @@
 export default defineEventHandler(async (event) => {
 
   // handle context auth
-  const { auth } = await event.context
-  const { user } = auth
-
+  const { user } = await event?.context?.auth
   
   return {
     statusCode: 200,

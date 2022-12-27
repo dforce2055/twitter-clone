@@ -1,6 +1,6 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
+  <NuxtLayout >
+    <NuxtPage class="bigotillo" />
   </NuxtLayout>
 </template>
 <style>

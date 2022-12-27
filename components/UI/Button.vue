@@ -9,7 +9,8 @@
     type="button"
     :disabled="disabled"
     :class="classes"
-    class="justify-center rounded-md border border-transparent bg-dim-600 text-white shadow-sm hover:bg-dim-700 focus:outline-none focus:ring-2 focus:ring-dim-500 focus:ring-offset-2 py-2 px-4 text-sm font-medium"
+    class="justify-center sm:rounded-md border border-transparent bg-dim-600 text-white shadow-sm hover:bg-dim-700 focus:outline-none focus:ring-2 focus:ring-dim-500 focus:ring-offset-2 py-2 px-4 text-sm font-medium
+    rounded-full"
     @click="handleClick"
   >
 

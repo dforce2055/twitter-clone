@@ -6,65 +6,64 @@
           <Title>Home / Twitter</Title>
       </Head>
 
-      <!-- <div class="border-b" :class="twitterBorderColor">
-          <TweetForm :user="user" @on-success="handleFormSuccess" />
+      <div class="border-b" :class="twitterBorderColor">
+          <TweetForm
+            v-if="user"
+            :user="user"
+            @on-success="handleFormSuccess"
+          />
       </div>
 
-      <TweetListFeed :tweets="homeTweets" /> -->
-
+      <TweetListFeed
+        v-if="homeTweets"
+        :tweets="homeTweets"
+      />
+      
     </MainSection>
   </div>
 </template>
 <script setup lang="ts">
+import { useUser } from "~/stores/user"
+import { User, Tweet } from '../types'
+
+const userStore = useUser()
+let user = userStore.$state.user as User | undefined
 const loading = ref(true)
 const loadingUserSesion = ref(true)
+const homeTweets = ref([] as undefined | Tweet[])
 
 // definePageMeta({
 //   middleware: ['auth']
 // })
 
-
-// const { data } = await useFetch('/api/users?name=bigote', {
-//   method: 'post',
-//   body: {
-//     age: 36
-//   }
-// })
-const { data } = await useFetch('/api/auth/user')
-console.log('user', data.value)
-loading.value = false
-// const { data } = await useFetch('/api/auth/refresh')
-// console.log('refresh_toke', data.value?.refresh_token)
-
-
 const { twitterBorderColor } = useTailwindConfig()
 // const { getTweets } = useTweets()
-
-// const loading = ref(false)
-// const homeTweets = ref([])
 // const { useAuthUser } = useAuth()
-
 // const user = useAuthUser()
 
-// onBeforeMount(async () => {
-//     loading.value = true
-//     try {
-//         const { tweets } = await getTweets()
+onBeforeMount(async () => {
+  setTimeout(async () => {
+    loading.value = true
+    try {
+      const { data } = await useFetch('/api/tweets')
+      homeTweets.value = data.value?.tweets
+    } catch (error) {
+        console.log(error)
+    } finally {
+        loading.value = false
+    }
+  }, 500)
+})
 
-//         homeTweets.value = tweets
-//     } catch (error) {
-//         console.log(error)
-//     } finally {
-//         loading.value = false
-//     }
-// })
+const handleFormSuccess = (tweet: Tweet) => {
+  const path = useCustomLocaleRoute(`/status/`)
+  debugger
+  navigateTo(`${path}/${tweet.id}`)
+}
 
-// function handleFormSuccess(tweet) {
-//     navigateTo({
-//         path: `/status/${tweet.id}`
-//     })
-// }
-
-setTimeout(() => { loadingUserSesion.value = false }, 1500)
+setTimeout(() => {
+  // loading.value = false
+  loadingUserSesion.value = false
+}, 1500)
 
 </script>

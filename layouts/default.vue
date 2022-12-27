@@ -1,6 +1,6 @@
 <template>
-  <section :class="{ 'dark': darkMode}">
-    <div class="bg-gray-100 dark:bg-gray-800">
+  <section id="layout" :class="{ 'dark': userStore.$state.darkMode  }">
+    <div class="bg-white dark:bg-gray-800">
       <main class="container mx-auto lg:px-4 content-center min-h-screen">
         <div class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-5">
           <!-- Left sidebar -->
@@ -64,21 +64,27 @@
   </section>
 </template>
 <script setup lang="ts">
-import { $ref } from "vue/macros"
-// https://dev.to/thisdotmedia/how-to-omit-value-in-refs-vue-3-composition-api-3jbd
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 import {  DialogTitle } from '@headlessui/vue'
 import { useUser } from "~/stores/user"
 import { User } from '../types'
 const userStore = useUser()
 let user = userStore.$state.user as User | undefined
-let showNotificationLogout = $ref(false)
+let showNotificationLogout = ref(false)
 
 const router = useRouter()
 
+onBeforeMount(() =>  {
+  const layout = document.querySelector('#layout')
+  if (userStore.$state.darkMode)
+    layout?.classList.add('dark')
+  else
+    layout?.classList.remove('dark')
+})
+
 const onLogout = async () => {
   userStore.$reset()
-  showNotificationLogout = false
+  showNotificationLogout.value = false
 
   await useFetch('/api/auth/logout')
   user = undefined
@@ -95,9 +101,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'DefaultLayout',
-  data: () => ({
-    darkMode: false,
-  }),
 })
 
 </script>

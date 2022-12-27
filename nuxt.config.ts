@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  vite: {
-    vue: {
-      reactivityTransform: true
-    }
-  },
+  // vite: {
+  //   vue: {
+  //     reactivityTransform: true
+  //   }
+  // },
   app: {
     head: {
       // charset: 'utf-16',
@@ -41,6 +41,9 @@ export default defineNuxtConfig({
     apiSecret: process.env.NUXT_API_SECRET || '123',
     jwtAccessTokenSecret: process.env.JWT_ACCESS_TOKEN_SECRET || '@',
     jwtRefreshTokenSecret: process.env.JWT_REFRESH_TOKEN_SECRET || '@',
+    cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || '@',
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || '@',
+    cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || '@',
 
     // Public keys that are exposed to the client
     public: {
@@ -58,7 +61,8 @@ export default defineNuxtConfig({
   ],
   plugins: [
     // https://seb-l.github.io/pinia-plugin-persist/#vue3
-    '~/plugins/pinia-plugin-persist.client'
+    '~/plugins/pinia-plugin-persist.client',
+    // '~/plugins/test',
   ],
 
   i18n: {

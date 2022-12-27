@@ -6,11 +6,13 @@ export const useUser = defineStore('user', {
     user: undefined as User | undefined,
     accessToken: undefined as String | undefined,
     refreshToken: undefined as String | undefined,
+    darkMode: undefined as Boolean | undefined,
   }),
   getters: {
     getUser: (state) => state.user,
     getAccessToken: (state) => state.accessToken,
     getRefreshToken: (state) => state.refreshToken,
+    getDarkMode: (state) => state.darkMode,
   },
   actions: {
     async setUser(user: User) {
@@ -22,12 +24,15 @@ export const useUser = defineStore('user', {
     setRefreshToken(jwt: string) {
       this.refreshToken = jwt
     },
+    setDarkMode(darkMode: boolean) {
+      this.darkMode = darkMode
+    },
   },
   persist: {
     enabled: true,
     strategies: [
       {
-        paths: ['accessToken', 'refreshToken', 'user']
+        paths: ['accessToken', 'refreshToken', 'user', 'darkMode']
       }
     ],
   }
