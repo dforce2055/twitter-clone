@@ -2,7 +2,7 @@
   <div class="flex items-center justify-around w-full">
     <TweetItemActionsIcon
       color="blue"
-      @on-click="emits('onCommentClick')"
+      @on-click="onCommentClick(props.tweet)"
       :size="size"
     >
       <template v-slot:icon="{ classes }">
@@ -51,9 +51,11 @@ import {
   ArrowPathIcon,
   HeartIcon,
   ArrowUpTrayIcon,
-} from "@heroicons/vue/24/outline";
+} from "@heroicons/vue/24/outline"
+import { useApp } from "~/stores/app"
+const appStore = useApp()
 
-const emits = defineEmits(["onCommentClick"]);
+const emits = defineEmits(["on-comment-click", "on-click"])
 
 const props = defineProps({
   tweet: {
@@ -71,5 +73,10 @@ const size = computed(() => (props.compact ? 5 : 8));
 
 function generateRandomNumber() {
   return Math.floor(Math.random() * 100);
+}
+
+const onCommentClick = (tweet) => {
+  emits("on-comment-click", tweet)
+  appStore.setReplyTweet(tweet)
 }
 </script>

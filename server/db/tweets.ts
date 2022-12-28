@@ -13,12 +13,13 @@ export const getTweets = (params?: {}) => {
   })
 }
 
-export const getTweetById = (tweetId, params = {}) => {
-  return prisma.tweet.findUnique({
+export const getTweetById = (tweetId: string, params: object = {}) => {
+  const tweet = prisma.tweet.findUnique({
       ...params,
       where: {
-          ...params.where,
+          ...params?.where,
           id: tweetId
       },
   })
+  return tweet
 }

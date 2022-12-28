@@ -15,11 +15,17 @@
       :key="tweet.id"
       @click.native="redirect(tweet)"
     >
-      <TweetItem :tweet="tweet" compact />
+      <TweetItem 
+        :tweet="tweet"
+        @on-comment-click="onCommentClick"
+        @reply-tweet="onReplyClick"
+        compact 
+      />
     </div>
   </div>
 </template>
 <script setup>
+const emits = defineEmits(["on-comment-click"])
 const { twitterBorderColor, defaultTransition } = useTailwindConfig();
 
 const props = defineProps({
@@ -34,4 +40,9 @@ const isEmptyArray = computed(() => props.tweets.length === 0);
 function redirect(tweet) {
   navigateTo(`/status/${tweet.id}`);
 }
+
+const onCommentClick = (tweet) => {
+  emits("on-comment-click", tweet)
+}
+
 </script>

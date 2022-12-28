@@ -25,3 +25,16 @@ export interface NewTweet {
   // mediafiles
   mediaFiles?: string
 }
+export interface TweetTransformated {
+  id: string
+  text: string
+  createdAt: Date
+  updatedAt: Date
+  mediaFiles: any[]
+  author?: any | null
+  replies: any[]
+  replyTo?: any | null
+  repliesCount: number
+  postedAtHuman: string
+  updatedAtHuman: string
+}

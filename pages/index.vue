@@ -17,6 +17,7 @@
       <TweetListFeed
         v-if="homeTweets"
         :tweets="homeTweets"
+        @on-reply-tweet="onReplyTweet"
       />
       
     </MainSection>
@@ -52,12 +53,11 @@ onBeforeMount(async () => {
     } finally {
         loading.value = false
     }
-  }, 500)
+  }, 100)
 })
 
 const handleFormSuccess = (tweet: Tweet) => {
   const path = useCustomLocaleRoute(`/status/`)
-  debugger
   navigateTo(`${path}/${tweet.id}`)
 }
 
@@ -65,5 +65,9 @@ setTimeout(() => {
   // loading.value = false
   loadingUserSesion.value = false
 }, 1500)
+
+const onReplyTweet = () => {
+  console.log('onReplyTweet')
+}
 
 </script>

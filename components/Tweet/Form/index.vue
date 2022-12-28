@@ -18,7 +18,7 @@
   </div>
 </template>
 <script setup>
-const emits = defineEmits(["on-success"]);
+const emits = defineEmits(["on-success"])
 const loading = ref(false);
 const { postTweet } = useTweets();
 
@@ -50,7 +50,6 @@ async function handleFormSubmit(data) {
       replyTo: props.replyTo?.id,
     })
     const tweet = response?.data?.value?.tweet
-    debugger
     emits("on-success", tweet)
   } catch (error) {
     console.log(error)

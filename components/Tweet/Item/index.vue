@@ -23,7 +23,6 @@
         <TweetItemActions
           :tweet="props.tweet"
           :compact="props.compact"
-          @on-comment-click="handleCommentClick"
         />
       </div>
     </div>
@@ -32,7 +31,6 @@
 <script setup>
 const { twitterBorderColor } = useTailwindConfig();
 
-const emitter = useEmitter();
 
 const props = defineProps({
   tweet: {
@@ -55,7 +53,4 @@ const tweetBodyWrapper = computed(() =>
 
 const textSize = computed(() => (props.compact ? "text-base" : "text-2xl"));
 
-function handleCommentClick() {
-  emitter.$emit("replyTweet", props.tweet);
-}
 </script>

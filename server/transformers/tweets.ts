@@ -1,11 +1,11 @@
 
 
 import { mediaFileTransformer, userTransformer } from "./index"
-// import { Tweet } from '../../types'
+import { Tweet, TweetTransformated } from '../../types'
 import human from "human-time"
 
 // TODO: add type Tweet
-export const tweetTransformer = (tweet: any): any => {
+export const tweetTransformer = (tweet: any): TweetTransformated => {
   return {
     id: tweet.id,
     text: tweet.text,

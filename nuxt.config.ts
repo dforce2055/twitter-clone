@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         { name: 'description', content: 'Twitter Clone - Social Media' },
         { name: 'author', content: 'Diego Pérez' },
         { name: 'dev', content: 'dforce2055 dperez2055@gmail.com' },
-        { name: 'keywords', content: 'javascript, typescript, nuxt, vue, node, tailwindcss' },
+        { name: 'keywords', content: 'javascript, typescript, nuxt, vue, node, tailwindcss, SSR, Prisma, Cloudinary' },
       ],
     },
     pageTransition: { name: 'page', mode: 'out-in' },

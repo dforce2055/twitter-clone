@@ -1,3 +1,9 @@
+# My home brew Twitter Clone
+<img 
+  src="./assets/images/docs/twitter-clone.jpg"
+  style="max-width:850px; margin: 0 auto; text-align:center"
+/>
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
