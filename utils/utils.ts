@@ -21,3 +21,12 @@ export const detectBrowser = (headers: IncomingHttpHeaders): boolean => {
     return false
   }
 }
+
+export const isAValidUrl = (url: string): boolean => {
+  try {
+    const validUrl = new URL(url)
+    return validUrl?.protocol?.includes('http') || validUrl?.protocol?.includes('https')
+  } catch (e) {
+    return false
+  }
+}

@@ -5,7 +5,7 @@ import { User, UserWithRepeatPassword, NewUser } from '../../../types'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const { username, email, password, repeatPassword, name }: UserWithRepeatPassword = body
+  const { username, email, password, repeatPassword, name, profileImage }: UserWithRepeatPassword = body
 
   if (!username || !email || !password || !repeatPassword || !name)
     return sendError(event, createError({
@@ -24,10 +24,11 @@ export default defineEventHandler(async (event) => {
     email,
     password,
     name,
-    profileImage: 'https://picsum.photos/200/200'
+    profileImage: profileImage ?? 'https://picsum.photos/200/200'
   }
 
   const user = await createUser(userData)
+  
 
   return {
     message: `Hi there`,

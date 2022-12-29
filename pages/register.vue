@@ -1,6 +1,13 @@
 <template>
   <section>
     <div class="flex min-h-full">
+      <div class="relative hidden w-0 flex-1 lg:block">
+        <img
+          class="absolute inset-0 h-full w-full object-cover"
+          src="https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+          alt=""
+        />
+      </div>
       <div
         class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24"
       >
@@ -10,21 +17,15 @@
               <LogoTwitter />
             </div>
             <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-              {{ $t("sign-in-to-your-account") }}
+              {{ $t("sign-up") }}
             </h2>
-            <p v-if="false" class="mt-2 text-sm text-gray-600">
-              Or
-              {{ " " }}
-              <a href="#" class="font-medium text-dim-600 hover:text-dim-500"
-                >start your 14-day free trial</a
-              >
-            </p>
+            
           </div>
 
           <div class="mt-8">
             <div>
               <div>
-                <p class="text-sm font-medium text-gray-700">Sign in with</p>
+                <p class="text-sm font-medium text-gray-700">Sign up with</p>
 
                 <div class="mt-1 grid grid-cols-3 gap-3">
                   <div>
@@ -32,7 +33,7 @@
                       href="#"
                       class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span class="sr-only">Sign in with Facebook</span>
+                      <span class="sr-only">Sign up with Facebook</span>
                       <svg
                         class="h-5 w-5"
                         aria-hidden="true"
@@ -70,7 +71,7 @@
                       href="#"
                       class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span class="sr-only">Sign in with GitHub</span>
+                      <span class="sr-only">Sign up with GitHub</span>
                       <svg
                         class="h-5 w-5"
                         aria-hidden="true"
@@ -105,25 +106,69 @@
 
             <div class="mt-6">
               <form action="#" method="POST" class="space-y-6">
-                <!-- <div>
-                  <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-700">
+                    Profile Image (url)
+                  </label>
                   <div class="mt-1">
                     <input 
-                      v-model="email" 
-                      id="email" 
-                      name="email" 
-                      type="email" 
+                      v-model="profileImage"
+                      id="profileImage"
+                      name="profileImage"
+                      type="profileImage"
+                      autocomplete="profileImage"
+                      required="false"
+                      class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-dim-500 focus:outline-none focus:ring-dim-500 sm:text-sm"
+                    />
+                  </div>
+                  <label
+                    v-if="invalidProfileImage"
+                    for="name" 
+                    class="block text-xs font-medium text-red-500"
+                  >
+                    Profile Image is invalid
+                  </label>
+                </div>
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-700">Full Name *</label>
+                  <div class="mt-1">
+                    <input 
+                      v-model="name" 
+                      id="name" 
+                      name="name" 
+                      type="name" 
+                      autocomplete="name" 
+                      required="true" 
+                      class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-dim-500 focus:outline-none focus:ring-dim-500 sm:text-sm"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700">Email address *</label>
+                  <div class="mt-1">
+                    <input 
+                      v-model="email"
+                      id="email"
+                      name="email"
+                      type="email"
                       autocomplete="email" 
                       required="true" 
                       class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-dim-500 focus:outline-none focus:ring-dim-500 sm:text-sm"
                     />
                   </div>
-                </div> -->
+                  <label
+                    v-if="invalidEmail"
+                    for="name" 
+                    class="block text-xs font-medium text-red-500"
+                  >
+                    Email is invalid
+                  </label>
+                </div>
                 <div>
                   <label
                     for="username"
                     class="block text-sm font-medium text-gray-700"
-                    >Username</label
+                    >Username *</label
                   >
                   <div class="mt-1">
                     <input
@@ -142,7 +187,7 @@
                   <label
                     for="password"
                     class="block text-sm font-medium text-gray-700"
-                    >Password</label
+                    >Password *</label
                   >
                   <div class="mt-1">
                     <input
@@ -157,44 +202,39 @@
                   </div>
                 </div>
 
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
+                <div class="space-y-1">
+                  <label
+                    for="password"
+                    class="block text-sm font-medium text-gray-700"
+                    >Repeat Password *</label
+                  >
+                  <div class="mt-1">
                     <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      class="h-4 w-4 rounded border-gray-300 text-dim-600 focus:ring-dim-500"
+                      v-model="repeatPassword"
+                      id="repeatPassword"
+                      name="repeatPassword"
+                      type="password"
+                      autocomplete="current-repeatPassword"
+                      required="true"
+                      class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-dim-500 focus:outline-none focus:ring-dim-500 sm:text-sm"
                     />
-                    <label
-                      for="remember-me"
-                      class="ml-2 block text-sm text-gray-900"
-                      >Remember me</label
-                    >
                   </div>
-
-                  <div class="text-sm">
-                    <a
-                      href="#"
-                      class="font-medium text-dim-600 hover:text-dim-500"
-                      >Forgot your password?</a
-                    >
-                  </div>
+                  <label
+                    v-if="invalidPassword"
+                    for="name" 
+                    class="block text-xs font-medium text-red-500"
+                  >
+                    The passwords doesn't match
+                  </label>
                 </div>
 
                 <div class="flex items-center justify-between gap-3">
                   <UIButton
-                    text="Sign in"
+                    text="Sign up"
                     size="block"
                     actionColor="primary"
                     :loading="loading"
-                    :disabled="disabled"
-                    @click="onLogin"
-                  />
-                  <UIButton
-                    text="Register"
-                    size="block"
-                    actionColor="secondary"
-                    :loading="loading"
+                    :disabled="invalidForm"
                     @click="onRegister"
                   />
                 </div>
@@ -203,16 +243,10 @@
           </div>
         </div>
       </div>
-      <div class="relative hidden w-0 flex-1 lg:block">
-        <img
-          class="absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
-          alt=""
-        />
-      </div>
     </div>
     <UINotificationSuccess
       :username="username"
+      message="Welcome to the community! Please login to continue."
       :show="showSuccessNotification"
       @close="showSuccessNotification = false"
     />
@@ -221,80 +255,141 @@
       :show="showErrorNotification"
       @close="showErrorNotification = false"
     />
-    <!-- <pre>{{ userStore.$state }}</pre>
-  <pre>{{ user }}</pre> -->
   </section>
 </template>
 <script setup lang="ts">
-import { useUser } from "~/stores/user";
-import { useCustomLocaleRoute } from "~~/composables/useCustomLocaleRoute";
-import { User } from "../types";
+import { useUser } from "~/stores/user"
+import { useCustomLocaleRoute } from "~~/composables/useCustomLocaleRoute"
+import { useVueRecaptcha } from "~~/composables/useVueRecaptcha"
+import { User } from "../types"
 
-const userStore = useUser();
-const user = userStore.$state.user;
+const token = ref('')
+
+onMounted(async () => {
+  token.value = await useVueRecaptcha()
+})
+
+const userStore = useUser()
+const user = userStore.$state.user as User
+
+if (user) {
+  const router = useRouter()
+  const path = useCustomLocaleRoute("/")
+  router.push({ path })
+}
 
 definePageMeta({
   layout: "clean",
-});
+})
 
-let loading = ref(false);
-let username = ref("");
-let password = ref("");
-let showSuccessNotification = ref(false);
-let showErrorNotification = ref(false);
-let errorMessage = ref("");
-let disabled = computed(() => {
-  return !username.value || !password.value;
-});
+const loading = ref(false)
 
-if (user) {
-  const router = useRouter();
-  const path = useCustomLocaleRoute("/");
-  router.push({ path });
-}
+const name = ref("")
+const username = ref("")
+const email = ref("")
+const password = ref("")
+const repeatPassword = ref("")
+const profileImage = ref("")
 
-const onLogin = async () => {
+
+const showSuccessNotification = ref(false)
+const showErrorNotification = ref(false)
+const errorMessage = ref("")
+
+const invalidProfileImage = computed(() => {
+  if (profileImage.value === '')
+    return false
+  return !isAValidUrl(profileImage.value)
+})
+
+const invalidEmail = computed(() => {
+  if (email.value === '')
+    return false
+  return !isAValidEmail(email.value)
+})
+const invalidPassword = computed(() => {
+  if (password.value === '' || !password.value && repeatPassword.value === '')
+    return false
+  return password.value !== repeatPassword.value
+})
+
+const invalidForm = computed(() => {
+  let result = false
+  result = !name.value || !username.value || !email.value || !password.value || !repeatPassword.value
+
+  if (invalidProfileImage.value)
+    result = true
+  
+  if (invalidEmail.value)
+    result = true
+  
+  if (invalidPassword.value)
+    result = true
+
+  return result
+})
+
+const isAValidUrl = (url: string): boolean => {
   try {
-    loading.value = true;
+    if (!url || url.length < 5)
+      return false
+    
+    const validUrl = new URL(url)
+    return validUrl?.protocol?.includes('http') || validUrl?.protocol?.includes('https')
+  } catch (e) {
+    return false
+  }
+}
+const isAValidEmail = (email: string): boolean => {
+  try {
+    if (!email || email.length < 5)
+      return false
 
-    const { data, error } = await useFetch("/api/auth/login", {
-      method: "post",
-      body: {
-        username: username.value,
-        password: password.value,
-      },
-    });
-
-    if (error.value) {
-      const message = await error.value?.statusMessage;
-      throw new Error(message);
-    }
-
-    const user = data.value?.user as User;
-    const { accessToken, refreshToken }: any = data.value;
-
-    userStore.setUser(user);
-    userStore.setAccessToken(accessToken);
-    userStore.setRefreshToken(refreshToken);
-
-    loading.value = false;
-    showSuccessNotification.value = true;
-
-    setTimeout(() => {
-      const router = useRouter();
-      const path = useCustomLocaleRoute("/");
-      router.push({ path });
-    }, 1000);
-  } catch (error: any) {
-    loading.value = false;
-    errorMessage = error.message;
-    showErrorNotification.value = true;
+    const validEmailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return email.match(validEmailRegex) ? true : false
+  } catch (e) {
+    return false
   }
 }
 
 const onRegister = async () => {
-  const router = useRouter()
-  const path = useCustomLocaleRoute("/register")
-  router.push({ path })
+  if (invalidForm.value || invalidProfileImage.value)
+    return
+
+  try {
+    loading.value = true
+
+    const { data, error } = await useFetch("/api/auth/register", {
+      method: "post",
+      body: {
+        profileImage: profileImage.value,
+        name: name.value,
+        email: email.value,
+        username: username.value,
+        password: password.value,
+        repeatPassword: repeatPassword.value,
+      },
+    })
+
+    if (error.value) {
+      const message = await error.value?.statusMessage
+      throw new Error(message)
+    }
+
+    // const user = data.value?.user as User
+
+    loading.value = false
+    showSuccessNotification.value = true
+
+    setTimeout(() => {
+      const router = useRouter()
+      const path = useCustomLocaleRoute("/login")
+      router.push({ path })
+    }, 3500)
+  } catch (error: any) {
+    loading.value = false
+    errorMessage.value = error.message as string
+    showErrorNotification.value = true
+  }
 }
 </script>

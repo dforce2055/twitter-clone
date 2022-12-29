@@ -34,6 +34,8 @@
     "jsonwebtoken": "^8.5.1",
     "mitt": "^3.0.0",
     "pinia-plugin-persist": "^1.0.0",
-    "url-pattern": "^1.0.3"
+    "url-pattern": "^1.0.3",
+    "vue-recaptcha-v3": "^2.0.1",
+    "vue3-recaptcha-v2": "^1.0.1"
   }
 }

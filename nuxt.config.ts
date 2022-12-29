@@ -44,11 +44,13 @@ export default defineNuxtConfig({
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || '@',
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || '@',
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || '@',
+    
 
     // Public keys that are exposed to the client
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
-      defaultLocale: process.env.NUXT_DEFAULT_LOCALE || 'en'
+      defaultLocale: process.env.NUXT_DEFAULT_LOCALE || 'en',
+      recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY || '',
     }
   },
 
@@ -62,7 +64,6 @@ export default defineNuxtConfig({
   plugins: [
     // https://seb-l.github.io/pinia-plugin-persist/#vue3
     '~/plugins/pinia-plugin-persist.client',
-    // '~/plugins/test',
   ],
 
   i18n: {
