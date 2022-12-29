@@ -133,13 +133,13 @@
                 :src="props.user?.profileImage || 'https://img2.freepng.es/20181126/hhu/kisspng-nasa-insignia-logo-image-outer-space-download-nasa-vector-logo-eps-ai-free-seek-5bfcc9e1beb8a8.8315770215432934097812.jpg' " 
                 class="w-10 h-10 rounded-full"
               >
-              <div class="flex-col hidden ml-2 xl:block">
+              <div class="flex-col hidden ml-2 xl:block overflow-hidden">
                 <h1 class="text-sm font-bold text-gray-800 dark:text-white">
                   {{ user.name }}
                 </h1>
               
-                <p class="text-sm text-gray-400">
-                  {{ user?.handle ?? 'https://github.com/dforce2055' }}
+                <p class="text-xs text-gray-400 ">
+                  {{ getHandle }}
                 </p>
               </div>
     
@@ -216,5 +216,13 @@ const router = useRouter()
 
 const route = useRoute()
 
+const getHandle = computed(() => {
+  if (props.user) {
+    return props.user?.handle
+      ? props.user?.handle?.slice(0, 20) + '...'
+      : 'https://github.com/dforce2055'.slice(0, 20) + '...'
+
+  }
+})
 
 </script>
