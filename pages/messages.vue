@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="4xl">Messages Page</h1>
+    <UnderConstruction />
   </section>
 </template>
 <script setup lang="ts">

@@ -1,7 +1,17 @@
 import { getTweetById } from '../server/db/tweets'
-import { Tweet } from '../types'
+import { Tweet, TweetTransformated } from '../types'
 
 export default () => {
+  const getTweets = async () => {
+    try {
+      const result = await useFetch('/api/tweets')
+      const tweets = result.data.value?.tweets as TweetTransformated[]
+      return { tweets }
+    } catch (error) {
+      return { tweets: [] }
+    }
+  }
+
   const postTweet = (formData: any) => {
     try {
       const form = new FormData()
@@ -28,9 +38,20 @@ export default () => {
       return null
     }
   }
+  const getTweetsComposable = async ({ query }: { query: string }) => {
+    try {
+      const result = await useFetch(`/api/tweets?q=${query}`)
+      const tweets = result.data.value?.tweets as TweetTransformated[]
+      return { tweets }
+    } catch (error) {
+      return { tweets: [] }
+    }
+  }
 
   return {
+    getTweets,
     postTweet,
-    getTweetById
+    getTweetById,
+    getTweetsComposable
   }
 }

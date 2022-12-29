@@ -5,9 +5,9 @@ import { getTweets } from '../../db/tweets'
 import { tweetTransformer } from '~~/server/transformers'
 
 export default defineEventHandler(async (event) => {
+  const query = getQuery(event)
+  const { q: searchQuery } = query as { q: string }
 
-  // handle context auth
-  // const { user } = await event?.context?.auth
   let prismaQuery = {
     skip: 0,
     take: 10,
@@ -31,6 +31,19 @@ export default defineEventHandler(async (event) => {
       }
     ],
   }
+
+  if (searchQuery) {
+    prismaQuery = {
+      ...prismaQuery,
+      where: {
+        text: {
+          contains: searchQuery
+        }
+      }
+    }
+  }
+
+
   const tweets = await getTweets(prismaQuery)
   return {
     statusCode: 200,

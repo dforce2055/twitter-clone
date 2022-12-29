@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <TweetItem
-        v-if="props.replyTo && props.showReply"
+        v-if="props.user && props.replyTo && props.showReply"
         hideActions
         :tweet="props.replyTo"
       />
@@ -25,7 +25,7 @@ const { postTweet } = useTweets();
 const props = defineProps({
   user: {
     type: Object,
-    required: true,
+    required: false,
   },
   placeholder: {
     type: String,

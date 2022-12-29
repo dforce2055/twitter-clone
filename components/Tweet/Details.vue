@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TweetItem 
+    <TweetItem
       :tweet="props.tweet"
       @on-comment-click="onCommentClick"
     />
@@ -24,7 +24,7 @@ const props = defineProps({
   },
   user: {
     type: Object,
-    required: true,
+    required: false,
   },
 });
 

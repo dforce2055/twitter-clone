@@ -18,7 +18,6 @@
       <TweetItem 
         :tweet="tweet"
         @on-comment-click="onCommentClick"
-        @reply-tweet="onReplyClick"
         compact 
       />
     </div>
