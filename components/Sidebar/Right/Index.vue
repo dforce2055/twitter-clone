@@ -134,19 +134,19 @@ const whatsHappeningItems: any = ref([
 
 const whoToFollowItems = ref([
   {
-    name: "Joe Biden",
-    handle: "@JoeBiden",
-    image: "https://picsum.photos/200/200",
+    name: "Donald J. Trump",
+    handle: "@realDonaldTrump",
+    image: "https://pbs.twimg.com/profile_images/736392853992001537/eF4LJLkn_400x400.jpg" ?? "https://picsum.photos/200/200",
   },
   {
-    name: "Joe Biden",
-    handle: "@JoeBiden",
-    image: "https://picsum.photos/200/200",
+    name: "vitalik.eth",
+    handle: "@VitalikButerin",
+    image: "https://pbs.twimg.com/profile_images/977496875887558661/L86xyLF4_400x400.jpg" ?? "https://picsum.photos/200/200",
   },
   {
-    name: "Joe Biden",
-    handle: "@JoeBiden",
-    image: "https://picsum.photos/200/200",
+    name: "Linus Torvalds",
+    handle: "@Linus__Torvalds",
+    image: "https://pbs.twimg.com/profile_images/2828597835/0f1840e9c2fbafa93fe6f0d7ccf64a3e_400x400.jpeg" ?? "https://picsum.photos/200/200",
   },
 ]);
 

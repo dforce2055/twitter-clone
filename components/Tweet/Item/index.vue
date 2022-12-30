@@ -4,7 +4,7 @@
 
     <div :class="tweetBodyWrapper">
       <p
-        class="flex-shrink w-auto font-medium text-gray-800 dark:text-white"
+        class="flex-shrink w-auto text-gray-800 dark:text-white"
         :class="textSize"
       >
         {{ props.tweet.text }}
